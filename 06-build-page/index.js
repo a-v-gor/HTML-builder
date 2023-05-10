@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const fsPromises = require('node:fs/promises');
 const distDirPath = path.join(__dirname, 'project-dist');
+const newLineChar = process.platform === 'win32' ? '\r\n' : '\n';
 
 fs.rm(distDirPath, { recursive: true, force: true }, (err) => {
   if (err) {
@@ -74,7 +75,7 @@ fs.rm(distDirPath, { recursive: true, force: true }, (err) => {
       }
 
       stylesNames.forEach(async item => {
-        const styleText = String(await fsPromises.readFile(path.join(srcDirStylesPath, item))) + '\n';
+        const styleText = String(await fsPromises.readFile(path.join(srcDirStylesPath, item))) + newLineChar;
         await fsPromises.appendFile(dstStylesPath, styleText);
       });
     }

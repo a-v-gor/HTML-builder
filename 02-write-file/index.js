@@ -3,6 +3,7 @@ const path = require('node:path');
 const process = require('node:process');
 
 const pathToFile = path.join(__dirname, 'text.txt');
+const newLineChar = process.platform === 'win32' ? '\r\n' : '\n';
 
 function createFile() {
   fs.writeFile(
@@ -17,7 +18,7 @@ function createFile() {
 }
 
 function addDataToFile(data) {
-  if (data.toString() === 'exit\r\n') {
+  if (data.toString() === 'exit' + newLineChar) {
     process.exit();
   } else {
     fs.appendFile(
@@ -33,8 +34,8 @@ function addDataToFile(data) {
 }
 
 function sayHiBye(event) {
-  const str = (event === 0) ? 'Good bye.' : 'Enter the text.\n';
-  process.stdout.write(str);
+  const str = (event === 0) ? 'Good bye.' : 'Enter the text.';
+  process.stdout.write(str + newLineChar);
 }
 
 sayHiBye();
