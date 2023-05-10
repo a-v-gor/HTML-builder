@@ -15,9 +15,9 @@ fs.rm(distDirPath, { recursive: true, force: true }, (err) => {
         throw err;
       }
       let textStr = String(data);
-      const templates = textStr.match(/{{.*}}/g);
+      const templates = textStr.match(/{{\w+?}}/g);
       for (let i = 0; i < templates.length; i++) {
-        const templName = templates[i].match(/{{(.*)}}/)[1];
+        const templName = templates[i].match(/{{(\w+?)}}/)[1];
         fs.readFile(
           path.join(__dirname, 'components', `${templName}.html`),
           (err, data) => {
